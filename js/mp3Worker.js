@@ -1,9 +1,9 @@
-importScripts('libmp3lame.min.js');
+//importScripts('libmp3lame.min.js');
 
 var mp3codec;
 
 self.onmessage = function(e) {
-	switch (e.data.cmd) {
+	/*switch (e.data.cmd) {
 	case 'init':
 		if (!e.data.config) {
 			e.data.config = { };
@@ -37,5 +37,5 @@ self.onmessage = function(e) {
 		Lame.close(mp3codec);
 		mp3codec = null;
 		break;
-	}
+	}*/
 };
