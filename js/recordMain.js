@@ -22,10 +22,18 @@ function startUserMedia(stream) {
 
 function startRecording(button) {
 	recorder && recorder.record(button);
-	// button.disabled = true;
 	$( button ).addClass( "hidden" );
-	// button.nextElementSibling.disabled = false;
+	$( ".record" ).attr( "disabled" , true );
 	$( button.nextElementSibling ).removeClass( "hidden" );
+
+  var value = parseInt( $( "#timeRecording" ).val( ) );
+  if( value < 0 || !value )
+      value = 4;
+
+  setTimeout( function( ) {
+    $( button.nextElementSibling ).trigger("click");//.bind( $( button.nextElementSibling ) )
+  } , value*1000 );
+
 	__log('Recording...');
 	var p = $( button ).parent( );
 	var pl = p.find( ".play" );
@@ -36,9 +44,8 @@ function startRecording(button) {
 
 function stopRecording(button) {
 	recorder && recorder.stop();
-	// button.disabled = true;
 	$( button ).addClass( "hidden" );
-	// button.previousElementSibling.disabled = false;
+	$( ".record" ).attr( "disabled" , false );
 	$( button.previousElementSibling ).removeClass( "hidden" );
 	__log('Stopped recording.');
 
@@ -64,7 +71,6 @@ function createDownloadLink() {
 }
 
 function clickPlay( play ) {
-	// audio.onended = play.( play , audio );
 	play.click( function( ) {
 
 		var audio = play.parent( ).find( "audio" )[ 0 ];
@@ -72,31 +78,26 @@ function clickPlay( play ) {
 		    // console.log('music stopped');
 			play.text( "Play" );
 		}
-		if (audio.paused == false) {
+		if (audio.paused == false || play.text( ) === "Stop" ) {
 		      audio.pause();
 		      audio.currentTime = 0;
 		      // console.log('music paused');
 			  play.text( "Play" );
 		  } else {
 		      audio.play();
+		      audio.currentTime = 0;
 		      // console.log('music playing');
 			  play.text( "Stop" );
 		  }
 	} );
 }
-
 function clickLoop( loop ) {
 
 	loop.click( function( ) {
 		var audio = loop.parent( ).find( "audio" )[ 0 ];
-
-		var play = loop.parent( ).find( ".play" );
-		audio.onended = function() {
-			loop.trigger( "click" );
-		}
-		audio.play();
-		// console.log('music playing');
-		play.text( "Stop" );
+		loop.toggleClass( "btn-default" );
+		loop.toggleClass( "btn-info" );
+		audio.loop = !audio.loop;
 	} );
 }
 window.onload = function init() {

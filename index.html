@@ -1,87 +1,115 @@
 <!DOCTYPE html>
-
 <html>
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Looper</title>
-    
-    <!-- <link rel="stylesheet" href="css/bootstrap.min.css"> -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
-    
-    <script src="js/jquery-1.9.1.js"></script>
-    <!-- // <script src="js/bootstrap.min.js"></script> -->
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
-    <style>
-      .container-fluid div {
-        margin-top: 10px;
-      }
-      .row > div {
-        margin-bottom: 10px;
-        text-align: center;
-      }
-    </style>
-</head>
-<body>
-  <div class="container-fluid">
-  
-    <div>
-      <button id="addTracks" class="btn">
-          Add 4 tracks
-      </button>
-    </div>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Looper</title>
+        
+        <!-- <link rel="stylesheet" href="css/bootstrap.min.css"> -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+        
+        <script src="js/jquery-1.9.1.js"></script>
+        <!-- // <script src="js/bootstrap.min.js"></script> -->
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+        <style>
+            .form-inline {
+                margin-top: 10px;
+            }
+            .form-inline > div {
+                float: right;
+            }
+            .row > div {
+                margin-top: 10px;
+                margin-bottom: 10px;
+                text-align: center;
+            }
+            #addTracks {
+                margin: 15px;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container-fluid">
+            <div class="form-inline">
+                <button id="loopAll" class="btn btn-default">
+                    Loop all
+                </button>
+                <button id="playAll" class="btn btn-default">
+                    Play all
+                </button>
 
-    <div class="row">
+                <div class="form-group">
+                    <label class="sr-only" for="timeRecording">Time the recording lasts ( default 4 seconds )</label>
+                    <div class="input-group">
+                    <input type="text" class="form-control" id="timeRecording" placeholder="Record for... ( default 4s )">
+                    <div class="input-group-addon">s</div>
+                    </div>
+                </div>
+            </div>
 
-      <div class="col-sm-3 col-xs-6">
-        <button class="btn btn-default" onclick="startRecording(this);">Record</button>
-        <button class="btn btn-default hidden" onclick="stopRecording(this);">Stop</button>
-        <br/>
-        <button class="btn btn-default play hidden">Play</button>
-        <button class="btn btn-default loop hidden">Loop</button>
-        <audio src="" controls class="hidden"></audio>
-      </div>
+            <div class="row">
+                <div class="col-sm-3 col-xs-6">
+                    <button class="btn btn-default record" onclick="startRecording(this);">Record</button>
+                    <button class="btn btn-default stop hidden" onclick="stopRecording(this);">Stop</button>
+                    <br/>
+                    <button class="btn btn-default play hidden">Play</button>
+                    <button class="btn btn-default loop hidden">Loop</button>
+                    <audio src="" controls class="hidden"></audio>
+                </div>
+                <div class="col-sm-3 col-xs-6">
+                    <button class="btn btn-default record" onclick="startRecording(this);">Record</button>
+                    <button class="btn btn-default stop hidden" onclick="stopRecording(this);">Stop</button>
+                    <br/>
+                    <button class="btn btn-default play hidden">Play</button>
+                    <button class="btn btn-default loop hidden">Loop</button>
+                    <audio src="" controls class="hidden"></audio>
+                </div>
+                <div class="col-sm-3 col-xs-6">
+                    <button class="btn btn-default record" onclick="startRecording(this);">Record</button>
+                    <button class="btn btn-default stop hidden" onclick="stopRecording(this);">Stop</button>
+                    <br/>
+                    <button class="btn btn-default play hidden">Play</button>
+                    <button class="btn btn-default loop hidden">Loop</button>
+                    <audio src="" controls class="hidden"></audio>
+                </div>
+                <div class="col-sm-3 col-xs-6">
+                    <button class="btn btn-default record" onclick="startRecording(this);">Record</button>
+                    <button class="btn btn-default stop hidden" onclick="stopRecording(this);">Stop</button>
+                    <br/>
+                    <button class="btn btn-default play hidden">Play</button>
+                    <button class="btn btn-default loop hidden">Loop</button>
+                    <audio src="" controls class="hidden"></audio>
+                </div>
+            </div>
+        </div>
 
-      <div class="col-sm-3 col-xs-6">
-        <button class="btn btn-default" onclick="startRecording(this);">Record</button>
-        <button class="btn btn-default hidden" onclick="stopRecording(this);">Stop</button>
-        <br/>
-        <button class="btn btn-default play hidden">Play</button>
-        <button class="btn btn-default loop hidden">Loop</button>
-        <audio src="" controls class="hidden"></audio>
-      </div>
+        <button id="addTracks" class="btn">
+            Add 4 tracks
+        </button>
 
-      <div class="col-sm-3 col-xs-6">
-        <button class="btn btn-default" onclick="startRecording(this);">Record</button>
-        <button class="btn btn-default hidden" onclick="stopRecording(this);">Stop</button>
-        <br/>
-        <button class="btn btn-default play hidden">Play</button>
-        <button class="btn btn-default loop hidden">Loop</button>
-        <audio src="" controls class="hidden"></audio>
-      </div>
+        <script>
+            var div = $( $( ".row" )[ 0 ] );
+            var html = "<div class='row'> " + div.html( ) + "</div>";
+            $( "#addTracks" ).click( function( ) {
+                $( ".container-fluid" ).append( html );
+            } );
 
-      <div class="col-sm-3 col-xs-6">
-        <button class="btn btn-default" onclick="startRecording(this);">Record</button>
-        <button class="btn btn-default hidden" onclick="stopRecording(this);">Stop</button>
-        <br/>
-        <button class="btn btn-default play hidden">Play</button>
-        <button class="btn btn-default loop hidden">Loop</button>
-        <audio src="" controls class="hidden"></audio>
-      </div>
-
-    </div>
-
-  </div>
-
-  <script>
-
-    var div = $( $( ".row" )[ 0 ] );
-    var html = "<div class='row'> " + div.html( ) + "</div>";
-    $( "#addTracks" ).click( function( ) {
-      $( ".container-fluid" ).append( html );
-    } );
-  </script>
-  <script src="js/recordMain.js"></script>
-  <script src="js/recordFn.js"></script>
-</body>
+            $( "#loopAll" ).click( function( ) {
+                $( ".loop" ).each( function( ) {
+                    if( $( this ).hasClass( "btn-default" ) )
+                        $( this ).trigger( "click" );
+                } );
+                $( ".play" ).each( function( ) {
+                    $( this ).trigger( "click" );
+                } );
+            } );
+            $( "#playAll" ).click( function( ) {
+                $( ".play" ).each( function( ) {
+                    $( this ).trigger( "click" );
+                } );
+            } );
+        </script>
+        <script src="js/recordMain.js"></script>
+        <script src="js/recordFn.js"></script>
+    </body>
 </html>
