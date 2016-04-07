@@ -5,39 +5,24 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>Looper</title>
         
-        <!-- <link rel="stylesheet" href="css/bootstrap.min.css"> -->
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/7.0.0/css/bootstrap-slider.min.css">
+        <link rel="stylesheet" href="css/style.css">
         
-        <script src="js/jquery-1.9.1.js"></script>
-        <!-- // <script src="js/bootstrap.min.js"></script> -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.3/jquery.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
-        <style>
-            .form-inline {
-                margin-top: 10px;
-            }
-            .form-inline > div {
-                float: right;
-            }
-            .row > div {
-                margin-top: 10px;
-                margin-bottom: 10px;
-                text-align: center;
-            }
-            #addTracks {
-                margin: 15px;
-            }
-        </style>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/7.0.0/bootstrap-slider.js"></script>
+
     </head>
     <body>
         <div class="container-fluid">
             <div class="form-inline">
-                <button id="loopAll" class="btn btn-default">
+                <button id="loopAll" class="btn btn-default loopAll">
                     Loop all
                 </button>
-                <button id="playAll" class="btn btn-default">
+                <button id="playAll" class="btn btn-default playAll">
                     Play all
                 </button>
-
                 <div class="form-group">
                     <label class="sr-only" for="timeRecording">Time the recording lasts ( default 4 seconds )</label>
                     <div class="input-group">
@@ -55,6 +40,8 @@
                     <button class="btn btn-default play hidden">Play</button>
                     <button class="btn btn-default loop hidden">Loop</button>
                     <audio src="" controls class="hidden"></audio>
+
+                    <input class="volume" data-slider-id='ex1Slider' type="text" data-slider-min="0" data-slider-max="100" data-slider-step="1" data-slider-value="100" data-slider-orientation="vertical"/>
                 </div>
                 <div class="col-sm-3 col-xs-6">
                     <button class="btn btn-default record" onclick="startRecording(this);">Record</button>
@@ -63,6 +50,8 @@
                     <button class="btn btn-default play hidden">Play</button>
                     <button class="btn btn-default loop hidden">Loop</button>
                     <audio src="" controls class="hidden"></audio>
+
+                    <input class="volume" data-slider-id='ex1Slider' type="text" data-slider-min="0" data-slider-max="100" data-slider-step="1" data-slider-value="100" data-slider-orientation="vertical"/>
                 </div>
                 <div class="col-sm-3 col-xs-6">
                     <button class="btn btn-default record" onclick="startRecording(this);">Record</button>
@@ -71,14 +60,20 @@
                     <button class="btn btn-default play hidden">Play</button>
                     <button class="btn btn-default loop hidden">Loop</button>
                     <audio src="" controls class="hidden"></audio>
+
+                    <input class="volume" data-slider-id='ex1Slider' type="text" data-slider-min="0" data-slider-max="100" data-slider-step="1" data-slider-value="100" data-slider-orientation="vertical"/>
                 </div>
                 <div class="col-sm-3 col-xs-6">
                     <button class="btn btn-default record" onclick="startRecording(this);">Record</button>
                     <button class="btn btn-default stop hidden" onclick="stopRecording(this);">Stop</button>
                     <br/>
-                    <button class="btn btn-default play hidden">Play</button>
-                    <button class="btn btn-default loop hidden">Loop</button>
-                    <audio src="" controls class="hidden"></audio>
+                    <div class="form-inline">
+                        <button class="btn btn-default play hidden">Play</button>
+                        <button class="btn btn-default loop hidden">Loop</button>
+                        <audio src="" controls class="hidden"></audio>
+
+                        <input class="volume" data-slider-id='ex1Slider' type="text" data-slider-min="0" data-slider-max="100" data-slider-step="1" data-slider-value="100" data-slider-orientation="vertical"/>
+                    </div>
                 </div>
             </div>
         </div>
@@ -88,25 +83,91 @@
         </button>
 
         <script>
+            var changeVolume = function( ) {
+                var val = parseInt( $( this ).siblings( "input.volume" ).attr( "data-value" ) );
+                var au = $( this ).siblings( "audio" )[ 0 ];
+                au.volume = val / 100;
+            } 
+            $('.volume').slider({ reversed : true });
+            $( '.slider' ).addClass( "hidden" );
+            $( '.slider' ).on( 'change' ,  changeVolume );
+
             var div = $( $( ".row" )[ 0 ] );
             var html = "<div class='row'> " + div.html( ) + "</div>";
             $( "#addTracks" ).click( function( ) {
                 $( ".container-fluid" ).append( html );
             } );
 
-            $( "#loopAll" ).click( function( ) {
-                $( ".loop" ).each( function( ) {
-                    if( $( this ).hasClass( "btn-default" ) )
-                        $( this ).trigger( "click" );
-                } );
-                $( ".play" ).each( function( ) {
-                    $( this ).trigger( "click" );
-                } );
+            $( ".play" ).click( function( ) {
+                var play = $( this );
+                var audio = play.siblings( "audio" )[ 0 ];
+                audio.onended = function() {
+                    play.text( "Play" );
+
+                      var allStop = true;
+                      $( ".play" ).each( function( ) {
+                        if( $( this ).text( ) === "Stop" ) {
+                            console.log( $( this ) );
+                            allStop = false;
+                        }
+                      } );
+                      // console.log( allStop );
+
+                }
+                if (audio.paused == false || play.text( ) === "Stop" ) {
+                      audio.pause();
+                      audio.currentTime = 0;
+                      play.text( "Play" );
+                  } else {
+                      audio.play();
+                      audio.currentTime = 0;
+                      play.text( "Stop" );
+                  }
             } );
+
+
+            $( ".loop" ).click( function( ) {
+                var loop = $( this );
+                var audio = loop.siblings( "audio" )[ 0 ];
+                loop.toggleClass( "btn-default" );
+                loop.toggleClass( "btn-info" );
+                audio.loop = !audio.loop;
+            } );
+
+            $( "#loopAll" ).click( function( ) {;
+                if( $( this ).hasClass( "loopAll" ) ) {
+                    $( ".loop" ).each( function( ) {
+                        if( $( this ).hasClass( "btn-default" ) )
+                            $( this ).trigger( "click" );
+                    } );
+                    $( this ).text( "Unloop all");
+                }
+                else {
+                    $( ".loop" ).each( function( ) {
+                        if( ! $( this ).hasClass( "btn-default" ) )
+                            $( this ).trigger( "click" );
+                    } );
+                    $( this ).text( "Loop all");
+                }
+                $( this ).toggleClass( "loopAll unloopAll" );
+            } );
+
             $( "#playAll" ).click( function( ) {
-                $( ".play" ).each( function( ) {
-                    $( this ).trigger( "click" );
-                } );
+                if( $( this ).hasClass( "playAll" ) ) {
+                    $( ".play" ).each( function( ) {
+                        if( $( this ).text( ) === "Play" )
+                            $( this ).trigger( "click" );
+                    } );
+                    $( this ).text( "Stop all");
+                }
+                else {
+                    $( ".play" ).each( function( ) {
+                        if( $( this ).text( ) === "Stop" )
+                            $( this ).trigger( "click" );
+                    } );
+                    $( this ).text( "Play all");
+                }
+                $( this ).toggleClass( "playAll stopAll" );
             } );
         </script>
         <script src="js/recordMain.js"></script>

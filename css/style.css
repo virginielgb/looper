@@ -1,0 +1,22 @@
+.form-inline {
+    margin-top: 10px;
+}
+.form-inline > div {
+    float: right;
+}
+.row > div {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    text-align: center;
+}
+#addTracks {
+    margin: 15px;
+}
+.slider {
+    height: 40px !important;
+}
+.slider-handle {
+    width: 15px;
+    height: 15px;
+    margin-left: -2.25px !important;
+}
