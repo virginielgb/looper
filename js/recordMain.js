@@ -31,10 +31,12 @@ function startRecording(button) {
 	var loop = p.find( ".loop" );
 	var slider = p.find( ".slider" );
 	var del = p.find( ".deleteAudio" );
-	pl.addClass( "hidden" )
-	loop.addClass( "hidden" )
-	slider.addClass( "hidden" )
-	del.addClass( "hidden" )
+	var name = p.find( ".trackName" );
+	pl.addClass( "hidden" );
+	loop.addClass( "hidden" );
+	slider.addClass( "hidden" );
+	del.addClass( "hidden" );
+	name.addClass( "hidden" );
 }
 
 function stopRecording(button) {
@@ -58,11 +60,13 @@ function createDownloadLink() {
 		var loop = p.find( ".loop" );
 		var slider = p.find( ".slider" );
 		var del = p.find( ".deleteAudio" );
+		var name = p.find( ".trackName" );
 		au.attr( "src" , url );
 		pl.removeClass( "hidden" );
 		loop.removeClass( "hidden" );
 		slider.removeClass( "hidden" );
 		del.removeClass( "hidden" );
+		name.removeClass( "hidden" );
 	} );
 }
 
