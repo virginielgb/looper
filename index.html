@@ -4,6 +4,7 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>Looper</title>
+        <link rel="icon" href="/favicon.png">
         
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/7.0.0/css/bootstrap-slider.min.css">
@@ -15,7 +16,29 @@
 
     </head>
     <body>
+        
         <div class="container-fluid">
+            
+            <div class="alert alert-danger alert-dismissible fade in" role="alert"> 
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button> 
+                <h4>Oh snap, this doesn't work on insecure origins</h4>
+                <p>
+                    This website is not secured, so if you want to try it, you can always tell your browser you want to access the secured mirror of this website*. No worries, there is nothing confidential there anyway. <br/><br/>
+                    <small> <em>*In Google Chrome, you'll need to click on 'Advanced', then 'Proceed to &lt;url&gt; (unsafe)'.</em></small>
+                </p>
+                <p>
+                    <a href="https://virginielgb.com/looper" class="btn btn-danger">Okay, I really want to try it</a>
+                    <button type="button" data-dismiss="alert" aria-label="Close" class="btn btn-default" id="whatever">Whatever</button>
+                </p>
+            </div>
+
+        </div>
+    
+
+        <div class="container-fluid" id="main">
+
             <div class="form-inline">
                 <button id="loopAll" class="btn btn-default loopAll">
                     Loop all
@@ -33,49 +56,65 @@
             </div>
 
             <div class="row">
+
                 <div class="col-sm-3 col-xs-6">
                     <button class="btn btn-default record" onclick="startRecording(this);">Record</button>
                     <button class="btn btn-default stop hidden" onclick="stopRecording(this);">Stop</button>
                     <br/>
                     <button class="btn btn-default play hidden">Play</button>
                     <button class="btn btn-default loop hidden">Loop</button>
-                    <audio src="" controls class="hidden"></audio>
 
                     <input class="volume" data-slider-id='ex1Slider' type="text" data-slider-min="0" data-slider-max="100" data-slider-step="1" data-slider-value="100" data-slider-orientation="vertical"/>
+
+                    <button class="btn btn-default btn-circle deleteAudio hidden">x</button>
+                    
+                    <audio src="" controls class="hidden"></audio>
                 </div>
+
                 <div class="col-sm-3 col-xs-6">
                     <button class="btn btn-default record" onclick="startRecording(this);">Record</button>
                     <button class="btn btn-default stop hidden" onclick="stopRecording(this);">Stop</button>
                     <br/>
                     <button class="btn btn-default play hidden">Play</button>
                     <button class="btn btn-default loop hidden">Loop</button>
-                    <audio src="" controls class="hidden"></audio>
 
                     <input class="volume" data-slider-id='ex1Slider' type="text" data-slider-min="0" data-slider-max="100" data-slider-step="1" data-slider-value="100" data-slider-orientation="vertical"/>
+
+                    <button class="btn btn-default btn-circle deleteAudio hidden">x</button>
+                    
+                    <audio src="" controls class="hidden"></audio>
                 </div>
+
                 <div class="col-sm-3 col-xs-6">
                     <button class="btn btn-default record" onclick="startRecording(this);">Record</button>
                     <button class="btn btn-default stop hidden" onclick="stopRecording(this);">Stop</button>
                     <br/>
                     <button class="btn btn-default play hidden">Play</button>
                     <button class="btn btn-default loop hidden">Loop</button>
-                    <audio src="" controls class="hidden"></audio>
 
                     <input class="volume" data-slider-id='ex1Slider' type="text" data-slider-min="0" data-slider-max="100" data-slider-step="1" data-slider-value="100" data-slider-orientation="vertical"/>
+
+                    <button class="btn btn-default btn-circle deleteAudio hidden">x</button>
+
+                    <audio src="" controls class="hidden"></audio>
                 </div>
+
                 <div class="col-sm-3 col-xs-6">
                     <button class="btn btn-default record" onclick="startRecording(this);">Record</button>
                     <button class="btn btn-default stop hidden" onclick="stopRecording(this);">Stop</button>
                     <br/>
-                    <div class="form-inline">
-                        <button class="btn btn-default play hidden">Play</button>
-                        <button class="btn btn-default loop hidden">Loop</button>
-                        <audio src="" controls class="hidden"></audio>
+                    <button class="btn btn-default play hidden">Play</button>
+                    <button class="btn btn-default loop hidden">Loop</button>
 
-                        <input class="volume" data-slider-id='ex1Slider' type="text" data-slider-min="0" data-slider-max="100" data-slider-step="1" data-slider-value="100" data-slider-orientation="vertical"/>
-                    </div>
+                    <input class="volume" data-slider-id='ex1Slider' type="text" data-slider-min="0" data-slider-max="100" data-slider-step="1" data-slider-value="100" data-slider-orientation="vertical"/>
+
+                    <button class="btn btn-default btn-circle deleteAudio hidden">x</button>
+                    
+                    <audio src="" controls class="hidden"></audio>
                 </div>
+
             </div>
+
         </div>
 
         <button id="addTracks" class="btn">
@@ -83,19 +122,26 @@
         </button>
 
         <script>
+            var isLocal = ( document.location.hostname === "localhost" || document.location.hostname === "127.0.0.1" );
+            if( document.location.protocol === "https:" || isLocal )
+                $( ".alert" ).addClass( "hidden" );
+            
+            $( "#whatever" ).click( function( ) {
+                $( ".record" ).toggleClass( "btn-default btn-warning" );
+            } );
             var changeVolume = function( ) {
                 var val = parseInt( $( this ).siblings( "input.volume" ).attr( "data-value" ) );
                 var au = $( this ).siblings( "audio" )[ 0 ];
                 au.volume = val / 100;
             } 
-            $('.volume').slider({ reversed : true });
+            $( '.volume' ).slider( { reversed : true } );
             $( '.slider' ).addClass( "hidden" );
             $( '.slider' ).on( 'change' ,  changeVolume );
 
             var div = $( $( ".row" )[ 0 ] );
             var html = "<div class='row'> " + div.html( ) + "</div>";
             $( "#addTracks" ).click( function( ) {
-                $( ".container-fluid" ).append( html );
+                $( "#main" ).append( html );
             } );
 
             $( ".play" ).click( function( ) {
@@ -168,6 +214,20 @@
                     $( this ).text( "Play all");
                 }
                 $( this ).toggleClass( "playAll stopAll" );
+            } );
+
+            $( ".deleteAudio" ).click( function( ) {
+                var del = $( this );
+                var audio = del.siblings( "audio" )[ 0 ];
+                audio.src="";
+                var pl = del.siblings( ".play" );
+                var loop = del.siblings( ".loop" );
+                var vol = del.siblings( ".slider" );
+                pl.addClass( "hidden" );
+                pl.text( "Play" );
+                loop.addClass( "hidden" );
+                vol.addClass( "hidden" );
+                del.addClass( "hidden" );
             } );
         </script>
         <script src="js/recordMain.js"></script>

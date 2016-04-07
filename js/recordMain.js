@@ -30,9 +30,11 @@ function startRecording(button) {
 	var pl = p.find( ".play" );
 	var loop = p.find( ".loop" );
 	var slider = p.find( ".slider" );
+	var del = p.find( ".deleteAudio" );
 	pl.addClass( "hidden" )
 	loop.addClass( "hidden" )
 	slider.addClass( "hidden" )
+	del.addClass( "hidden" )
 }
 
 function stopRecording(button) {
@@ -55,10 +57,12 @@ function createDownloadLink() {
 		var pl = p.find( ".play" );
 		var loop = p.find( ".loop" );
 		var slider = p.find( ".slider" );
+		var del = p.find( ".deleteAudio" );
 		au.attr( "src" , url );
 		pl.removeClass( "hidden" );
 		loop.removeClass( "hidden" );
 		slider.removeClass( "hidden" );
+		del.removeClass( "hidden" );
 	} );
 }
 
