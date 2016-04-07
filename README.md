@@ -23,7 +23,7 @@ These changes are planned:
 * Naming tracks for easier use
 * Exporting files ( already possible, I just don't show the links )
 
-The changes would be lovely, but not just yet:
+These changes would be lovely, but not just yet:
 
 * Exporting result ( which would mean merging all audio tracks )
 
