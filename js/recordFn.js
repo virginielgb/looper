@@ -64,6 +64,7 @@
 
 		this.exportWAV = function(cb, type){
 			if( hasStopped <= 1 ) {
+				// console.log( buffer );
 				currCallback = cb || config.callback;
 				type = type || config.type || 'audio/wav';
 				if (!currCallback) throw new Error('Callback not set');
@@ -81,49 +82,49 @@
 		}
 
 
-	function encode64(buffer) {
-		var binary = '',
-			bytes = new Uint8Array( buffer ),
-			len = bytes.byteLength;
+		function encode64(buffer) {
+			var binary = '',
+				bytes = new Uint8Array( buffer ),
+				len = bytes.byteLength;
 
-		for (var i = 0; i < len; i++) {
-			binary += String.fromCharCode( bytes[ i ] );
-		}
-		return window.btoa( binary );
-	}
-
-	function parseWav(wav) {
-		function readInt(i, bytes) {
-			var ret = 0,
-				shft = 0;
-
-			while (bytes) {
-				ret += wav[i] << shft;
-				shft += 8;
-				i++;
-				bytes--;
+			for (var i = 0; i < len; i++) {
+				binary += String.fromCharCode( bytes[ i ] );
 			}
-			return ret;
+			return window.btoa( binary );
 		}
-		if (readInt(20, 2) != 1) throw 'Invalid compression code, not PCM';
-		if (readInt(22, 2) != 1) throw 'Invalid number of channels, not 1';
-		return {
-			sampleRate: readInt(24, 4),
-			bitsPerSample: readInt(34, 2),
-			samples: wav.subarray(44)
-		};
-	}
 
-	function Uint8ArrayToFloat32Array(u8a){
-		console.log("called");
-		var f32Buffer = new Float32Array(u8a.length);
-		for (var i = 0; i < u8a.length; i++) {
-			var value = u8a[i<<1] + (u8a[(i<<1)+1]<<8);
-			if (value >= 0x8000) value |= ~0x7FFF;
-			f32Buffer[i] = value / 0x8000;
+		function parseWav(wav) {
+			function readInt(i, bytes) {
+				var ret = 0,
+					shft = 0;
+
+				while (bytes) {
+					ret += wav[i] << shft;
+					shft += 8;
+					i++;
+					bytes--;
+				}
+				return ret;
+			}
+			if (readInt(20, 2) != 1) throw 'Invalid compression code, not PCM';
+			if (readInt(22, 2) != 1) throw 'Invalid number of channels, not 1';
+			return {
+				sampleRate: readInt(24, 4),
+				bitsPerSample: readInt(34, 2),
+				samples: wav.subarray(44)
+			};
 		}
-		return f32Buffer;
-	}
+
+		function Uint8ArrayToFloat32Array(u8a){
+			console.log("called");
+			var f32Buffer = new Float32Array(u8a.length);
+			for (var i = 0; i < u8a.length; i++) {
+				var value = u8a[i<<1] + (u8a[(i<<1)+1]<<8);
+				if (value >= 0x8000) value |= ~0x7FFF;
+				f32Buffer[i] = value / 0x8000;
+			}
+			return f32Buffer;
+		}
 
 		source.connect(this.node);
 		this.node.connect(this.context.destination); //this should not be necessary

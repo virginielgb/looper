@@ -1,4 +1,4 @@
-# Looper v2.3 #
+# Looper v2.4 #
 
 This audio looper is made in javaScript and uses HTML5 audio APIs
 
@@ -16,12 +16,12 @@ Clone this repository or download the source code, upload it on a server ( it wo
 * Change the `volume` of each track indepedently
 * `Delete` any track
 * Add a `track name`
+* `Export` files
 
 ### Evolutions ###
 These changes are planned:
 
 * Use `navigator.mediaDevices.getUserMedia` instead of `navigator.getUserMedia` ( which is deprecated ) for the browsers that support it
-* Exporting files ( already possible, I just don't show the links )
 
 These changes would be lovely, but not just yet:
 
@@ -29,4 +29,4 @@ These changes would be lovely, but not just yet:
 
 
 #### Special thanks to ####
-@nusofthq for their Recordmp3jsrepo: [https://github.com/nusofthq/Recordmp3js](Link URL)
+@nusofthq for their Recordmp3jsrepo: [https://github.com/nusofthq/Recordmp3js](https://github.com/nusofthq/Recordmp3js)
