@@ -1,4 +1,4 @@
-# Looper v2.2 #
+# Looper v2.3 #
 
 This audio looper is made in javaScript and uses HTML5 audio APIs
 
@@ -15,12 +15,12 @@ Clone this repository or download the source code, upload it on a server ( it wo
 * Select the tracks you want to `play`/`stop`, or play them all at once ( `play all` and `stop all` )
 * Change the `volume` of each track indepedently
 * `Delete` any track
+* Add a `track name`
 
 ### Evolutions ###
 These changes are planned:
 
 * Use `navigator.mediaDevices.getUserMedia` instead of `navigator.getUserMedia` ( which is deprecated ) for the browsers that support it
-* Naming tracks for easier use
 * Exporting files ( already possible, I just don't show the links )
 
 These changes would be lovely, but not just yet:
